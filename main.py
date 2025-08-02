@@ -24,7 +24,18 @@ def load_data():
         })
     return df
 
-df = load_data()
+@st.cache_data
+def load_data():
+    # Dữ liệu mẫu cứng, không dùng file amazon.csv nữa
+    df = pd.DataFrame({
+        'discounted_price': [599, 299, 999, 799, 399],
+        'actual_price': [999, 499, 1999, 1499, 699],
+        'discount_percentage': [40, 40, 50, 47, 43],
+        'rating': [4.2, 3.8, 4.5, 4.1, 3.9],
+        'rating_count': [2200, 1500, 3100, 5000, 1800]
+    })
+    return df
+
 
 # ---------- Bước 2: Tiền xử lý dữ liệu ----------
 for col in ['discounted_price', 'actual_price', 'discount_percentage', 'rating', 'rating_count']:
@@ -81,3 +92,4 @@ if st.button("Dự đoán"):
     prediction = model.predict(input_data)[0]
     st.subheader("📈 Kết quả dự đoán:")
     st.success(f"⭐ Điểm đánh giá dự đoán: {round(prediction, 2)}")
+
